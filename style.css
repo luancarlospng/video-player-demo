@@ -3,48 +3,105 @@
     margin: 0;
 }
 
+body{
+    background-color: black;
+}
+
+#botaoPlay{
+    margin-right: 15px;
+}
+
 .container{
-    position: relative;
+    left: 50%;
+    right: 50%;
+    top: 30%;
+    transform: translate(-50%,-50%);
+    position: absolute;
     width: 600px;
     height: 300px;
-}
-
-.video{
-    width: 100%;
-    height: 100%;
-}
-
-.controle{
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    text-align: center;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
 }
 
-.btn{
-    position: relative;
+video{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.controles{
+    position: absolute;
     top: 100%;
-    margin-left: 10px;
     transform: translateY(-100%);
-    width: 40px;
-    cursor: pointer;
-    display: none;
-    border-radius: 100%;
-    background-color:#fff;
-}
-
-
-#range{
-    cursor: pointer;
-    position: absolute;
-    right: 12%;
-    top: 90%;
-    width: 90px;
+    width: 100%;
+    height: 10%;
+    background-color: black;
     display: none;
 }
 
-#duracao{
-    width: 500px;
+input{
+    float: left;
+    height: 100%;
+    width: 30px;
+    cursor: pointer;
+    font-size: 20px;
 }
+
+.volume{
+    top:100%;
+    transform: translateY(-100%);
+    float:right;
+    color: #fff;
+}
+.volume input[type="range"]{
+    width: 80px;
+}
+
+#spanVolume{
+  float: right;
+  margin-right: 2px;
+}
+
+.barraProgresso{
+    margin: auto;
+    height: 100%;
+    width: 420px;
+}
+
+.progresso{
+    display: inline-block;
+    height: 100%;
+    width: 420px;
+}
+
+
+
+#rangeProgresso{
+    width: 420px;
+}
+
+span{
+    float: left;
+    color: #fff;
+}
+
+#tempo{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    float: left;
+    color: #fff;
+}
+
+#tela{
+    color: #fff;    
+    float: right;
+    font-size: 15px;
+}
+
+/* remove o controls quando o video esta em full screen*/
+/* video::-webkit-media-controls {
+    display:none !important;
+} */

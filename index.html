@@ -4,26 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Video Player Demo</title>
+    <title>Vide Player Demo</title>
 </head>
 <body>
-
     <div class="container">
-        
-        <video  width="400" src="./video/queen.mp4" class="video" id="video"></video>
-
-        <div class="controle">
-                <img src="./img/retorna.png" class="btn" id="btn">
-                <img src="./img/avanca.png" class="btn" id="btn">
-                <img src="./img/play.png" class="btn play" id="play">
-                <img src="./img/stop.png" class="btn" id="btn">
-                <img src="./img/volume.png" class="btn volume" id="volume">
-                <input type="range" id="range" min="0" max="9" value="9">
+        <h6 id="tela">[ ]</h6>
+        <video src="./video/queen.mp4"></video>
+        <div class="controles">
+            <input type="button" value="|>" id="botaoPlay">
+            <h6 id="tempo">00:00:00</h6>
+            <div class="barraProgresso">
+                    <div class="progresso">
+                        <input type="range" value="0" min="0" id="rangeProgresso">
+                    </div>
+            </div>
+            <div class="volume">
+                <h6>Volume:<span id="spanVolume">médio</span></h6>
+                <input type="range" value="5" id="volume" min="0" max="10">
+            </div>
         </div>
-
     </div>
-    <span></span>
-    <input type="range" name="" id="duracao" min="0" value="0">
-    <script src="main.js"></script>
+
+<script src="main.js"></script>
 </body>
 </html>

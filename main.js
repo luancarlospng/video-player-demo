@@ -1,107 +1,148 @@
-document.querySelector('.controle').addEventListener('mouseover', () => {
-    let botao = document.getElementsByClassName('btn');
+const video = document.querySelector('video');
 
-    for (i = 0; i < botao.length; i++) {
-        botao[i].style.display = 'inline';
-    }
+// inicia o video.duration
+window.addEventListener('load', iniciar);
 
+function iniciar() {
+
+    duracaoTotal = video.duration;
+};
+//final
+
+//Escondendo os controles
+
+document.querySelector('.container').addEventListener('mouseover', () => {
+    document.querySelector('.controles').style.display = 'block';
 });
 
-document.querySelector('.controle').addEventListener('mouseout', () => {
-    let botao = document.getElementsByClassName('btn');
-
-    for (i = 0; i < botao.length; i++) {
-        botao[i].style.display = 'none';
-    }
-
+document.querySelector('.container').addEventListener('mouseout', () => {
+    document.querySelector('.controles').style.display = 'none';
 });
 
+//final
 
-document.querySelector('.play').addEventListener('click', (e) => {
 
-    const video = document.querySelector('.video');
+//Função de play e pause
+document.querySelector('#botaoPlay').addEventListener('click', () => {
 
-    if (e.target.id == 'pause') {
-        document.querySelector('.play').setAttribute('id', 'play');
-        document.querySelector('.play').setAttribute('src', './img/play.png');
-        video.pause();
+    let botao = document.querySelector('#botaoPlay');
+    if (video.paused) {
+        botao.value = '||';
+        video.play()
     } else {
-        document.querySelector('.play').setAttribute('id', 'pause');
-        document.querySelector('.play').setAttribute('src', './img/pause.png');
-        video.play();
+        botao.value = '|>';
+        video.pause()
     }
-
-    function duracao() {
-        const tempo = parseInt(video.currentTime);
-        console.log(tempo)
-        let horas = Math.floor(tempo / 3600);
-        let minutos = Math.floor((tempo - (horas * 3600)) / 60);
-        let segundos = Math.floor(tempo % 60);
-    
-        if (horas < 10) {
-            horas = '0' + horas;
-        }
-        if (minutos < 10) {
-            minutos = '0' + minutos;
-        }
-        if (segundos < 10) {
-            segundos = '0' + segundos;
-        }
-        const duracao = horas + ':' + minutos + ':' + segundos;
-
-        document.querySelector('span').innerHTML = duracao;
-
-        const rangeDuracao = document.querySelector('#duracao');
-
-       let value = video.currentTime;
-        console.log('value'+value)
-        rangeDuracao.setAttribute('value',`${value}`)
-
-    }
-
-    const maximo =  video.duration;
-    console.log('value'+maximo)
-
-    document.querySelector('#duracao').setAttribute('max',`${maximo}`)
-
-    setInterval(duracao,1000);
 
 });
+//final
 
+//Função de volume
 
-let video = document.querySelector('#video');
-
-document.querySelector('#range').addEventListener('input', (e) => {
-
-    let volume = parseInt(e.target.value);
+document.querySelector('#volume').addEventListener('input', (e) => {
+    let volume = e.target.value;
 
     video.volume = `0.${volume}`;
 
-});
-
-document.querySelector('.controle').addEventListener('mouseover', () => {
-    document.querySelector('#range').style.display = 'block';
-});
-
-document.querySelector('.controle').addEventListener('mouseout', () => {
-    document.querySelector('#range').style.display = 'none';
-});
-
-
-document.querySelector('.volume').addEventListener('click', (e) => {
-
-    const video = document.querySelector('.video');
-
-    let volume = document.querySelector('#range').value;
-
-    if (e.target.id == 'mute') {
-        document.querySelector('.volume').setAttribute('src', './img/mute.png');
-        document.querySelector('.volume').setAttribute('id', 'volume');
-        video.volume = 0;
-    } else {
-        document.querySelector('.volume').setAttribute('src', './img/volume.png');
-        document.querySelector('.volume').setAttribute('id', 'mute');
-        video.volume = `0.${volume}`;
+    if (volume < 1) {
+        document.querySelector('#spanVolume').innerHTML = 'mute';
+    }
+    if (volume >= 1 && volume < 5) {
+        document.querySelector('#spanVolume').innerHTML = 'baixo';
+    }
+    if (volume == 5) {
+        document.querySelector('#spanVolume').innerHTML = 'médio';
+    }
+    if (volume > 5) {
+        document.querySelector('#spanVolume').innerHTML = 'alto';
+    }
+    if (volume > 9) {
+        video.volume = 1.0;
+        document.querySelector('#spanVolume').innerHTML = 'maximo';
     }
 
 });
+
+//final
+
+//Barra de progresso
+
+function tempo() {
+
+    let tempo = video.currentTime;
+
+    if (!video.paused) {
+        var horas = Math.floor(tempo / 3600);
+        var minutos = Math.floor((tempo - (horas * 3600)) / 60);
+        var segundos = Math.floor(tempo % 60);
+
+        if (horas < 10) {
+            horas = '0' + horas
+        }
+        if (minutos < 10) {
+            minutos = '0' + minutos
+        }
+        if (segundos < 10) {
+            segundos = '0' + segundos
+        }
+
+        document.querySelector('#tempo').innerHTML = horas + ':' + minutos + ':' + segundos;
+
+        document.querySelector('#rangeProgresso').setAttribute('value', video.currentTime);
+    }
+
+    document.querySelector('#rangeProgresso').setAttribute('max', video.duration);
+    
+}
+
+let tempoTotal = setInterval(tempo, 1000);
+//final
+
+// função pause e play e retomada da barra de progresso.
+document.querySelector('#rangeProgresso').addEventListener('mousedown', () => {
+
+    video.pause();
+    document.querySelector('#botaoPlay').value = '||';
+
+    document.querySelector('#rangeProgresso').addEventListener('input', (e) => {
+        video.currentTime = e.target.value;
+    });
+
+});
+
+document.querySelector('#rangeProgresso').addEventListener('mouseup', () => {
+    video.play();
+    document.querySelector('#botaoPlay').value = '|>';
+
+    function retomando() {
+        let value = document.querySelector('#rangeProgresso').getAttribute('value');
+
+        document.querySelector('#rangeProgresso').value = value;
+    }
+    setInterval(retomando,1000);
+});
+//final
+
+// função de duplo click de pause e play
+video.addEventListener('dblclick',()=>{
+    if(!video.paused){
+        video.pause();
+        document.querySelector('#botaoPlay').value = '|>';
+    }else{
+        video.play();
+        document.querySelector('#botaoPlay').value = '||';
+    }
+});
+//final
+
+//Testando função tela full screen ou normal screen
+
+/* document.querySelector('#tela').addEventListener('click',()=>{
+    if(video.requestFullscreen){
+        video.requestFullscreen()
+    }else{
+        video.exitFullscreen()
+    }
+}); */
+
+//final
