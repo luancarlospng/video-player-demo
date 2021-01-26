@@ -112,7 +112,7 @@ document.querySelector('#rangeProgresso').addEventListener('mousedown', () => {
 
 document.querySelector('#rangeProgresso').addEventListener('mouseup', () => {
     video.play();
-    document.querySelector('#botaoPlay').value = '|>';
+    document.querySelector('#botaoPlay').value = '||';
 
     function retomando() {
         let value = document.querySelector('#rangeProgresso').getAttribute('value');
